@@ -53,6 +53,26 @@ The Password Manager web app provides the following features:
 
 6. **Deleting a Record**: To delete a password record, click the "Delete" button next to the corresponding record. Confirm the deletion when prompted.
 
+## Screenshots
+<details>
+<summary>Create Master Password Page</summary>
+
+![Create Master PassWord Page](screenshots/create-pass.png)
+
+</details>
+<details>
+<summary>Login Page</summary>
+
+![Login Page](screenshots/login-page.png)
+
+</details>
+<details>
+<summary>HomePage</summary>
+
+![HomePage](screenshots/homepage.png)
+
+</details>
+
 ## Database
 
 The application uses SQLite as the database to store password records. The database file (`db.sqlite3`) is automatically created when you run the application.
