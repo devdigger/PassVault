@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Manager - Secure Your Passwords</title>
+  <style>
+    /* CSS styles go here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 50px;
+      color: #333;
+    }
+    
+    p {
+      color: #666;
+    }
+    table, th, td {
+        border: 1px solid rgb(114, 114, 114);
+        border-collapse: collapse;
+        width:100%;
+    }
+    th,td{
+        padding-right: 150px;
+        padding-left:10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: left;
+    }
+    .top-nav {
+      background-color: #333;
+      height:50px;
+      padding: 0px;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+    }
+    .topbox{
+      display: flex;
+      flex-direction: row;
+      padding-right: 0px;
+      height: 100%;
+    }
+    .homebox,.aboutbox{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height:100%;
+      padding-left: 10px;
+      padding-right: 10px;
+      transition: background-color 0.2s;
+    }
+    .homebox:hover,.aboutbox:hover{
+      background-color: #585858;
+      cursor: pointer;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    
+    .cta-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px 20px;
+      text-align: center;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .cta-button:hover {
+      background-color: #0056b3;
+    }
+    .getinput{
+        display: flex;
+        flex-direction: row;
+        width:100px;
+        margin-right: 20px;
+    }
+    .toprow{
+        display:flex; 
+        flex-direction: row;
+        margin-bottom: 5px;
+        gap : 10px;
+    }
+    input{
+        width:200px;
+        height:25px;
+    }
+    .addbtn{
+        background-color: rgb(10, 193, 249);
+        
+    }
+    .dltbtn{
+        background-color: rgb(255, 32, 32);
+        transform: scale(0.98);
+    }
+    .addbtn:active{
+        background-color: rgb(10, 193, 249);
+        transform: scale(0.98);
+    }
+    .dltbtn:active{
+        background-color: rgb(255, 32, 32);
+        transform: scale(0.98);
+    }
+    .dltbtn:hover{
+        background-color: rgb(203, 24, 24);
+    }
+    .addbtn:hover{
+        
+        background-color:rgb(21, 144, 181);
+        
+    }
+    .viewbtn:hover{
+      background-color: rgb(28, 167, 59);
+    }
+    .savebtn:hover{
+      background-color: rgb(38, 155, 38);
+    }
+    .cancelbtn:hover{
+      background-color: rgb(209, 176, 43);
+    }
+    .editbtn:hover{
+      background-color: rgb(74, 74, 74);
+    }
+    button:hover{
+        cursor: pointer;
+        box-shadow: 0px 0px 2px 2px;
+        box-shadow: 2px 2px 10px 0px grey;
+    }
+    button{
+        padding: 8px 14px;
+        border:none;
+        color: white;
+        border-radius: 2px;
+        box-shadow: 0px 0px 2px 2px;
+        transition: background-color 0.15s,box-shadow 0.2s;
+    }
+    .savebtn{
+      background-color: rgb(47, 198, 47);
+    }
+    .cancelbtn{
+      background-color: rgb(240, 202, 49);
+    }
+    .deletebtn{
+      background-color: rgb(253, 45, 45);
+    }
+    .viewbtn{
+      background-color: rgb(34, 212, 73);
+      margin-left: auto;
+    }
+    .editbtn{
+      background-color: rgb(101, 101, 101);
+    }
+  </style>
+  <script>
+    function showAddRecordPopup() {
+      var popup = document.getElementById("add-record-popup");
+      popup.style.display = "block";
+    }
+
+    function closeAddRecordPopup() {
+      var popup = document.getElementById("add-record-popup");
+      popup.style.display = "none";
+    }
+    function showDeleteRecordPopup() {
+      var popup = document.getElementById("delete-record-popup");
+      popup.style.display = "block";
+    }
+    function closeDeleteRecordPopup() {
+      var popup = document.getElementById("delete-record-popup");
+      popup.style.display = "none";
+    }
+    function showEditRecordPopup() {
+      var popup = document.getElementById("edit-record-popup");
+      popup.style.display = "block";
+    }
+    function closeEditRecordPopup() {
+      var popup = document.getElementById("edit-record-popup");
+      popup.style.display = "none";
+    }
+    function showViewRecordPopup() {
+      var popup = document.getElementById("view-record-popup");
+      popup.style.display = "block";
+    }
+    function closeViewRecordPopup() {
+      var popup = document.getElementById("view-record-popup");
+      popup.style.display = "none";
+    }
+
+  </script>
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script>
+        {% endfor %}
+    {% endif %}
+
+<!-- Your form HTML code -->
+
+</head>
+<body>
+  <div class="top-nav">
+    <div class="topbox">'
+      <a href="/">
+        <div class="homebox">Home</div> 
+      </a>
+      <a href="about-us/">
+        <div class="aboutbox">About Us</div>
+      </a>
+    </div>
+    
+  </div>
+  <div class="container">
+    <h1>PASSWORD MANAGER</h1>
+
+    <div class="toprow">
+        <button onclick="showAddRecordPopup()" class="addbtn">Add Record</button>
+        <button onclick="showDeleteRecordPopup()" class="dltbtn">Delete Record</button>
+        <button onclick="showEditRecordPopup()" class="editbtn">Edit Record</button>
+        <button onclick="showViewRecordPopup()" class="viewbtn">View Record</button>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>WEBSITE</th>
+            <th>USERNAME</th>
+            <th>PASSWORD</th>
+        </tr>
+        {% for rows in db_rows %}
+        <tr >
+            {% for n in rows %}
+            <td>{{n}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- View Record Popup -->
+    <div id="view-record-popup" style="display: none;">
+      <div>
+          <h2>View Record</h2>
+          <form method="POST" action="/view-record/">
+            {% csrf_token %}
+
+            <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
+                
+                <div class="getinput"><label for="id">ID:</label></div>
+                <input type="text" id="id" name="id" required><br>
+            </div>
+
+            <button type="submit" class="viewbtn">View</button>
+            <button type="button" onclick="closeViewRecordPopup()" class="cancelbtn">Cancel</button>
+          </form>
+       </div>
+    </div>
+
+    <!-- Delete Record Popup -->
+
+    <div id="delete-record-popup" style="display: none;">
+        <div>
+            <h2>Delete Record</h2>
+            <form method="POST" action="/delete-record/">
+              {% csrf_token %}
+  
+              <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
+                  
+                  <div class="getinput"><label for="id">ID:</label></div>
+                  <input type="text" id="id" name="id" required><br>
+              </div>
+  
+              <button type="submit" class="deletebtn">Delete</button>
+              <button type="button" onclick="closeDeleteRecordPopup()" class="cancelbtn">Cancel</button>
+            </form>
+          </div>
+
+    </div>
+    
+    <!-- Edit Record Popup -->
+    <div id="edit-record-popup" style="display: none;">
+      <div>
+        <h2>Edit Record</h2>
+        <form method="POST" action="/edit-record/">
+          {% csrf_token %}
+
+          <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
+              
+            <div class="getinput"><label for="id">ID:</label></div>
+            <input type="text" id="id" name="id" required><br>
+          </div>
+          <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
+              
+              <div class="getinput"><label for="site">Site:</label></div>
+              <input type="text" id="site" name="site" required><br>
+          </div>
+          
+          <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
+              <div class="getinput"><label for="username">Username:</label></div>
+              <input type="text" id="username" name="username" required><br>
+          </div>
+          
+          <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
+              <div class="getinput"><label for="password">Password: </label></div>
+              <input type="password" id="password" name="password" required><br>
+          </div>
+
+          <button type="submit" class="savebtn">Save</button>
+          <button type="button" onclick="closeEditRecordPopup() " class="cancelbtn">Cancel</button>
+        </form>
+      </div>
+  </div>
+    
+    <!-- Add Record Popup -->
+    <div id="add-record-popup" style="display: none;">
+        <div>
+          <h2>Add Record</h2>
+          <form method="POST" action="/save-record/">
+            {% csrf_token %}
+
+            <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
+                
+                <div class="getinput"><label for="site">Site:</label></div>
+                <input type="text" id="site" name="site" required><br>
+            </div>
+            
+            <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
+                <div class="getinput"><label for="username">Username:</label></div>
+                <input type="text" id="username" name="username" required><br>
+            </div>
+            
+            <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
+                <div class="getinput"><label for="password">Password: </label></div>
+                <input type="password" id="password" name="password" required><br>
+            </div>
+
+            <button type="submit" class="savebtn">Save</button>
+            <button type="button" onclick="closeAddRecordPopup() " class="cancelbtn">Cancel</button>
+          </form>
+        </div>
+    </div>
+
+  </div>
+</body>
+</html>
