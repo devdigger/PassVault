@@ -77,14 +77,35 @@
       color: #fff;
       text-decoration: none;
     }
+    .middle{
+      text-align:center;
+    }
     .left,.middle,.topbox{
-      min-width:200px;
+      flex-grow:1;
     }
     .middle p{
       font-size: 16px;
       color: rgb(239, 239, 239);
       font-weight: 300;
       font-family: "Courier New", Courier, monospace;
+    }
+    @media only screen and (max-width: 600px) {
+      .container {
+        max-width:100%;
+      }
+      .left,.topbox,.middle p{
+        font-size: 12px;
+      }
+      .logoutbox{
+        font-size:12px;
+      }
+      h1 {
+      font-size: 30px;
+      color: #333;
+      }
+      p,li{
+          font-size: 14px;
+      }
     }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
