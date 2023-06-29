@@ -12,13 +12,20 @@
       background-color: #f1f1f1;
     }
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
       padding: 20px;
+    }
+    .box{
+      box-shadow: 0px 0px 30px 1px rgb(210, 210, 210);
+      padding: 20px 20px;
+      border-radius: 4px;
     }
     h1 {
       text-align: center;
-      font-size: 50px;
+      font-size: 40px;
       color: #333;
     }
     p,li{
@@ -29,16 +36,25 @@
       height:50px;
       padding: 0px;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
       align-items: center;
+    }
+    .left{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: left;
+      padding-right: 0px;
+      height: 50px;
     }
     .topbox{
       display: flex;
       flex-direction: row;
       padding-right: 0px;
+      justify-content: end;
       height: 100%;
     }
-    .homebox,.aboutbox{
+    .logoutbox,.homebox,.aboutbox{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -47,7 +63,12 @@
       padding-right: 10px;
       transition: background-color 0.2s;
     }
-    .homebox:hover,.aboutbox:hover{
+    .logoutbox{
+      height: 50px;
+      font-size: 15px;
+      font-family: monospace;
+    }
+    .homebox:hover,.aboutbox:hover,.logoutbox:hover{
       background-color: #585858;
       cursor: pointer;
     }
@@ -55,28 +76,52 @@
       color: #fff;
       text-decoration: none;
     }
+    .left,.middle,.topbox{
+      min-width:200px;
+    }
+    .middle p{
+      font-size: 16px;
+      color: rgb(239, 239, 239);
+      font-weight: 300;
+      font-family: "Courier New", Courier, monospace;
+    }
   </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
 </head>
 <body>
     <div class="top-nav">
-        <div class="topbox">'
-          <a href="/">
-            <div class="homebox">Home</div> 
-          </a>
-          <a href="about-us/">
-            <div class="aboutbox">About Us</div>
-          </a>
-        </div>
+      <div class="left">
+        <a href="/logout/">
+          <div class="logoutbox">Logout&nbsp;<i class="fa fa-sign-out"></i></div> 
+        </a>
+      </div>
+
+    <div class="middle">
+      <p>Logged in as {{ request.session.username }}</p>
     </div>
-    <div class="container">
+
+    <div class="topbox">
+      <a href="/">
+        <div class="homebox">Home</div> 
+      </a>
+      <a href="/about-us/">
+        <div class="aboutbox">About Us</div>
+      </a>
+    </div>
+    </div>
       <h1>PASSWORD MANAGER</h1>
-      <p>Welcome to Password Manager, the ultimate solution for securely storing and managing your passwords.</p>
-      <p>With Password Manager, you can:</p>
-      <ul>
-        <li>Store all your passwords in one secure location</li>
-        <li>Generate strong, random passwords</li>
-        <li>Access your passwords from anywhere, on any device</li>
-        <li>Keep your sensitive information protected with encryption</li>
-      </ul>
+      <div class="container">
+        <div class="box">
+          <p>Welcome to Password Manager, the ultimate solution for securely storing and managing your passwords.</p>
+          <p>With Password Manager, you can:</p>
+          <ul>
+            <li>Store all your passwords in one secure location</li>
+            <li>Generate strong, random passwords</li>
+            <li>Access your passwords from anywhere, on any device</li>
+            <li>Keep your sensitive information protected with encryption</li>
+          </ul>
+        </div>
     </div>
 </body>

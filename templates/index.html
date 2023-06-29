@@ -28,10 +28,27 @@
     p {
       color: #666;
     }
-    table, th, td {
+    table,th, td {
         border: 1px solid rgb(114, 114, 114);
         border-collapse: collapse;
         width:100%;
+    }
+    .fixed-table{
+      table-layout: fixed;
+      width: 100%;
+    }
+    .responsive-input {
+      font-size: 15px;
+      width:max-content;
+      height:20px;
+      box-sizing: border-box;
+      padding-bottom: 5px;
+      border: none;
+      background-color: transparent;
+      border-bottom: 1px solid rgb(99, 99, 99);
+    }
+    input:focus{
+      outline: none;
     }
     th,td{
         padding-right: 150px;
@@ -45,16 +62,28 @@
       height:50px;
       padding: 0px;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
       align-items: center;
     }
     .topbox{
       display: flex;
       flex-direction: row;
+      justify-content: end;
       padding-right: 0px;
       height: 100%;
     }
-    .homebox,.aboutbox{
+    .left{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: left;
+      padding-right: 0px;
+      height: 50px;
+    }
+    .left,.middle,.topbox{
+      min-width:200px;
+    }
+    .homebox,.aboutbox,.logoutbox{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -63,7 +92,12 @@
       padding-right: 10px;
       transition: background-color 0.2s;
     }
-    .homebox:hover,.aboutbox:hover{
+    .logoutbox{
+      height: 50px;
+      font-size: 15px;
+      font-family: monospace;
+    }
+    .homebox:hover,.aboutbox:hover,.logoutbox:hover{
       background-color: #585858;
       cursor: pointer;
     }
@@ -143,16 +177,17 @@
     }
     button:hover{
         cursor: pointer;
-        box-shadow: 0px 0px 2px 2px;
-        box-shadow: 2px 2px 10px 0px grey;
     }
     button{
         padding: 8px 14px;
         border:none;
         color: white;
         border-radius: 2px;
-        box-shadow: 0px 0px 2px 2px;
-        transition: background-color 0.15s,box-shadow 0.2s;
+        transition: background-color 0.3s,box-shadow 0.2s;
+    }
+    #save-buttons{
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
     .savebtn{
       background-color: rgb(47, 198, 47);
@@ -165,47 +200,81 @@
     }
     .viewbtn{
       background-color: rgb(34, 212, 73);
-      margin-left: auto;
+      margin-right: 0px;
     }
     .editbtn{
       background-color: rgb(101, 101, 101);
     }
+    .middle p{
+      font-size: 16px;
+      color: rgb(239, 239, 239);
+      font-weight: 300;
+      font-family: "Courier New", Courier, monospace;
+
+    }
+    .fixed-table td{
+      height: 18px;
+    }
+    .delete-record input{
+      height:18px;
+    }
+    .hidebtn{
+      margin-left: auto;
+      background-color: rgb(56, 36, 72);
+    }
+    .hidebtn:hover{
+      background-color: rgb(102, 65, 132);
+    }
   </style>
   <script>
     function showAddRecordPopup() {
-      var popup = document.getElementById("add-record-popup");
-      popup.style.display = "block";
+      var buttons = document.getElementById("save-buttons");
+      var addrow = document.getElementById("add-row");
+      addrow.style.display = "";
+      buttons.style.display = "";
+      document.getElementById("site").focus();
     }
 
     function closeAddRecordPopup() {
-      var popup = document.getElementById("add-record-popup");
-      popup.style.display = "none";
+      var buttons = document.getElementById("save-buttons");
+      var addrow = document.getElementById("add-row");
+      buttons.style.display = "none";
+      addrow.style.display = "none";
     }
     function showDeleteRecordPopup() {
-      var popup = document.getElementById("delete-record-popup");
-      popup.style.display = "block";
+      document.getElementById("editbtn").style.marginRight="auto";
+      document.getElementById("dltbtn").style.display="none";
+      document.getElementById("delete-rows").style.display = "flex";
+      document.getElementById("input-delete-id").focus();
+
     }
     function closeDeleteRecordPopup() {
-      var popup = document.getElementById("delete-record-popup");
-      popup.style.display = "none";
+      document.getElementById("dltbtn").style.display=""
+      document.getElementById("delete-rows").style.display = "none";
     }
     function showEditRecordPopup() {
-      var popup = document.getElementById("edit-record-popup");
-      popup.style.display = "block";
+      document.getElementById("editbtn").style.display="none";
+      document.getElementById("edit-record").style.display = "";
+      document.getElementById("edit-view-id").focus();
     }
     function closeEditRecordPopup() {
-      var popup = document.getElementById("edit-record-popup");
-      popup.style.display = "none";
+      document.getElementById("editbtn").style.display=""
+      document.getElementById("edit-record").style.display = "none";
     }
     function showViewRecordPopup() {
-      var popup = document.getElementById("view-record-popup");
-      popup.style.display = "block";
+      document.getElementById("viewbtn").style.marginRight="0px";
+      document.getElementById("viewbtn").style.display="none";
+      document.getElementById("view-rows").style.display = "flex";
+      document.getElementById("view-rows").style.marginRight="0px";
+      document.getElementById("input-view-id").focus();
     }
     function closeViewRecordPopup() {
-      var popup = document.getElementById("view-record-popup");
-      popup.style.display = "none";
+      document.getElementById("viewbtn").style.display=""
+      document.getElementById("view-rows").style.display = "none";
     }
-
+    function hideAll(){
+      window.location.href = "/hideall/";
+    }
   </script>
     {% if messages %}
         {% for message in messages %}
@@ -216,15 +285,27 @@
     {% endif %}
 
 <!-- Your form HTML code -->
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <div class="top-nav">
-    <div class="topbox">'
+    
+      <div class="left">
+        <a href="/logout/">
+          <div class="logoutbox">Logout&nbsp;<i class="fa fa-sign-out"></i></div> 
+        </a>
+      </div>
+
+    <div class="middle">
+      <p>Logged in as {{ request.session.username }}</p>
+    </div>
+
+    <div class="topbox">
       <a href="/">
         <div class="homebox">Home</div> 
       </a>
-      <a href="about-us/">
+      <a href="/about-us/">
         <div class="aboutbox">About Us</div>
       </a>
     </div>
@@ -235,26 +316,77 @@
 
     <div class="toprow">
         <button onclick="showAddRecordPopup()" class="addbtn">Add Record</button>
-        <button onclick="showDeleteRecordPopup()" class="dltbtn">Delete Record</button>
-        <button onclick="showEditRecordPopup()" class="editbtn">Edit Record</button>
-        <button onclick="showViewRecordPopup()" class="viewbtn">View Record</button>
+        <button onclick="showDeleteRecordPopup()" id="dltbtn"class="dltbtn">Delete Record</button>
+        <div class="delete-rows" id="delete-rows" style="display: none;width:fit-content;margin-left: auto;">
+          <form method="POST" action="/delete-record/">
+              {% csrf_token %}
+            <input placeholder="ID" id="input-delete-id" name="id" class="responsive-input" required>&nbsp;
+            <button type="submit" class="deletebtn">Delete</button>&nbsp;
+            <button type="button" onclick="closeDeleteRecordPopup()" class="cancelbtn">Cancel</button>
+          </form>
+      </div>
+        <button onclick="showEditRecordPopup()" id="editbtn" class="editbtn">Edit Record</button>
+        <div class="view-rows" id="view-rows" style="display: none;width:fit-content;margin-left: auto;">
+            <form method="POST" action="/view-record/">
+                {% csrf_token %}
+              <input placeholder="ID" id="input-view-id" name="id" class="responsive-input" required>&nbsp;
+              <button type="submit" class="viewbtn">View</button>&nbsp;
+              <button type="button" onclick="closeViewRecordPopup()" class="cancelbtn">Cancel</button>
+            </form>
+        </div>
+        <button onclick="hideAll()" class="hidebtn" id="hidebtn">Hide All</button>
+        <button onclick="showViewRecordPopup()" class="viewbtn" id="viewbtn">View Record</button>
     </div>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>WEBSITE</th>
-            <th>USERNAME</th>
-            <th>PASSWORD</th>
-        </tr>
-        {% for rows in db_rows %}
-        <tr >
-            {% for n in rows %}
-            <td>{{n}}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
-
+    <div style="overflow-x: auto;">
+      <form method="POST" action="/save-record/">
+        {% csrf_token %}
+      <table class="fixed-table">
+          <tr>
+              <th>ID</th>
+              <th>WEBSITE</th>
+              <th>USERNAME</th>
+              <th>PASSWORD</th>
+          </tr>
+          {% for rows in db_rows %}
+          <tr >
+              {% for n in rows %}
+              <td>{{n}}</td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+            <tr class="add-row" id="add-row" style="display:none">
+              <td style="font-style: italic;color: #585858;">default</td>
+              <td><input placeholder="SITE" id="site" name="site" class="responsive-input" required></td>
+              <td><input placeholder="USERNAME" id="username" name="username" class="responsive-input" required></td>
+              <td><input placeholder="PASSWORD" id="password" class="responsive-input" name="password" required></td>
+            </tr>
+          </form>
+      </table>
+        <div id="save-buttons" style="display:none">
+            <button type="submit" class="savebtn">Save</button>
+            <button type="button" onclick="closeAddRecordPopup() " class="cancelbtn">Cancel</button>
+        </div>
+    </form>
+    <br>
+    <br>
+      <div class="edit-record" id="edit-record" style="overflow-x: auto;display: none;">
+        <form method="POST" action="/edit-record/">
+            {% csrf_token %}
+          <table class="fixed-table two">
+            <tr class="edit-row" id="edit-row" style="display:''">
+              <td><input placeholder="ID" id="edit-view-id" name="id" class="responsive-input" required></td>
+              <td><input placeholder="SITE" id="site" name="site" class="responsive-input" required></td>
+              <td><input placeholder="USERNAME" id="username" name="username" class="responsive-input" required></td>
+              <td><input placeholder="PASSWORD" id="password" class="responsive-input" name="password" required></td>
+            </tr>
+          </table>
+          <div id="edit-buttons" style="display:''"><br>
+            <button type="submit" id = "savebtn" class="savebtn">Save</button>
+            <button type="button" onclick="closeEditRecordPopup() " class="cancelbtn">Cancel</button>
+        </div>
+      </form>
+      </div>
+  </div>
     <!-- View Record Popup -->
     <div id="view-record-popup" style="display: none;">
       <div>
@@ -329,34 +461,7 @@
       </div>
   </div>
     
-    <!-- Add Record Popup -->
-    <div id="add-record-popup" style="display: none;">
-        <div>
-          <h2>Add Record</h2>
-          <form method="POST" action="/save-record/">
-            {% csrf_token %}
-
-            <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
-                
-                <div class="getinput"><label for="site">Site:</label></div>
-                <input type="text" id="site" name="site" required><br>
-            </div>
-            
-            <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
-                <div class="getinput"><label for="username">Username:</label></div>
-                <input type="text" id="username" name="username" required><br>
-            </div>
-            
-            <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
-                <div class="getinput"><label for="password">Password: </label></div>
-                <input type="password" id="password" name="password" required><br>
-            </div>
-
-            <button type="submit" class="savebtn">Save</button>
-            <button type="button" onclick="closeAddRecordPopup() " class="cancelbtn">Cancel</button>
-          </form>
-        </div>
-    </div>
+    
 
   </div>
 </body>

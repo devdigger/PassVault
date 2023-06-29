@@ -25,9 +25,11 @@ urlpatterns = [
     path('save-record/',views.saverecord),
     path('delete-record/',views.deleterecord),
     path('login/', views.checklogin),
+    path('register/', views.register),
     path('view-record/', views.viewrecord),
     path('edit-record/',views.editrecord),
-    path('save-masterpass/',views.savemasterpass)
+    path('logout/',views.logout),
+    path('hideall/',views.hideall)
 ]
 
 

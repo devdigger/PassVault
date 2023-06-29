@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Verdana, sans-serif;
+      background-color: #ebebeb;
+    }
+    h1{
+      font-weight: 500;
+      font-family: Verdana, sans-serif;
+    }
+    .login-container {
+      width: 35%;
+      text-align: left;
+    }
+    .content{
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        flex-direction: column;
+        gap : 20px;
+        box-shadow: 0px 0px 20px 0.5px rgb(179, 179, 179);
+        border-radius: 4px;
+    }
+    .content-inner{
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        flex-direction: column;
+        padding-top: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        gap : 20px;
+        padding-bottom: 40px;
+    }
+    input{
+        width:100%;
+        font-family: Verdana, sans-serif;
+        height:30px;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid rgb(99, 99, 99);
+        font-size: 15px;
+    }
+    input:focus{
+      outline: none;
+    }
+    button{
+        margin-top: 0px;
+        margin-left: 0px;
+        font-family: Verdana, sans-serif;
+        padding: 10px 24px;
+        font-size:medium;
+        border:none;
+        color: white;
+        transition: background-color 0.5s;
+        width: 50%;
+    }
+    .login-button{
+      background-color: #2d3b55;
+      border-radius: 0px 0px 4px 0px;
+    }
+    .login-button:hover{
+      background-color: rgb(59, 81, 117);
+    }
+    .register-button:hover{
+      background-color: rgb(206, 206, 206);
+    }
+    .register-button{
+      background-color: #e8e9ec;
+      color: rgb(106, 106, 106);
+      border-radius: 0px 0px 0px 4px;
+    }
+    .button-container {
+      display: flex;
+      height: 50px;
+    }
+
+    .button-container button {
+      flex: 1;
+      margin: 0;
+    }
+    button:hover{
+        cursor: pointer;
+    }
+    .tooltip {
+      white-space: nowrap;
+      position: absolute;
+      opacity: 0;
+      border-radius: 2px;
+      left:0;
+      background-color: rgba(0, 0, 0, 0.537);
+      color: rgb(255, 255, 255);
+      font-style: bold;
+      padding: 5px;
+      font-size: 12px;
+      transition: opacity 0.3s;
+    }
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      bottom: -60%; /* Adjust the distance between the triangle and the tooltip box */
+      left: 30%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.537) transparent transparent transparent;
+    }
+    .form-result{
+        display: none;
+        color: rgb(210, 8, 8);
+        font-weight: 500;
+    }
+
+  </style>
+</head>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert("{{ message }}");
+        </script>
+    {% endfor %}
+{% endif %}
+<body>
+  
+  <div class="login-container">
+    <div class="content">
+      <form id="registerForm" method="post" action="/register/">
+        {% csrf_token %}
+        <div class = content-inner>
+          <h1>Register</h1>
+          <div style="position: relative;">
+            <div id="error_message_u" class="tooltip"></div>
+          </div>
+            <input type="username" id="master_username" name="master_username" placeholder="USERNAME">
+          <div style="position: relative;">
+            <div id="error_message_p" class="tooltip"></div>
+          </div>
+            <input type="password" id="master_password" name="master_password" placeholder="PASSWORD">
+            <div class="form-result" id="form-result">Credentials format INVALID!</div>
+        </div>
+          
+        <div class="button-container" >
+            <button class="register-button" id="register-button">Login</button>
+          <button type="submit" id = "login-button" class="login-button">Register</button>
+        </div>
+      </form>
+    </div> 
+    
+  </div>
+  <script>
+    // Get the input elements
+      const usernameInput = document.getElementById('master_username');
+      const passwordInput = document.getElementById('master_password');
+      const errorMessageU = document.getElementById('error_message_u');
+      const errorMessageP = document.getElementById('error_message_p');
+      const formResult = document.getElementById('form-result');
+
+
+      passwordInput.addEventListener("keypress", function(event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter") {
+                event.preventDefault();
+                // Cancel the default action, if needed
+                // Trigger the button element with a click
+                document.getElementById("login-button").click();
+            }
+        });
+        usernameInput.addEventListener("keypress", function(event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter") {
+                event.preventDefault();
+                // Cancel the default action, if needed
+                // Trigger the button element with a click
+                document.getElementById("login-button").click();
+            }
+        });
+      // Add event listeners for input changes
+      usernameInput.addEventListener('input', validateUsername);
+      passwordInput.addEventListener('input', validatePassword);
+
+      document.getElementById("register-button").addEventListener("click", function() {
+        event.preventDefault(); // Prevent the default form submission behavior
+        window.location.href = '/login/';
+      });
+
+
+      document.getElementById("login-button").addEventListener("click", function() {
+        console.log("Validating form...");
+        event.preventDefault();
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+        var hasWhitespaceU = username.indexOf(' ') >= 0;
+        var hasWhitespaceP = password.indexOf(' ') >= 0;
+        if (username.length < 8 || password.length<8 || hasWhitespaceU || hasWhitespaceP){
+            console.log("Form data invalid");
+            var divText = formResult.innerText || formResult.textContent;
+            console.log(divText);
+            formResult.style.display = 'block';
+            return false;
+        }
+        else{
+            var form = document.getElementById("registerForm");
+            form.submit();
+        }
+      });
+
+      
+      function validateUsername() {
+        const username = usernameInput.value;
+        var hasWhitespace = username.indexOf(' ') >= 0;
+        console.log(hasWhitespace);
+        if (username.length >= 8) {
+          // Username is valid
+          showErrorU('');
+        } 
+        else {
+            if (hasWhitespace) {
+            showErrorU('Username Cannot have Blank Spaces!')
+            }
+          // Username is invalid
+          else{
+          showErrorU('Username must be at least 8 characters long!');
+          }
+          
+        }
+      }
+
+      // Function to validate the password
+      function validatePassword() {
+        const password = passwordInput.value;
+        const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        var hasWhitespace = password.indexOf(' ') >= 0;
+        if (password.length >= 8 && !specialChars.test(password)) {
+          // Password is valid
+          showErrorP('');
+        } else {
+            if (hasWhitespace) {
+            showErrorU('Password Cannot have Blank Spaces!')
+            }
+            else{
+                showErrorP('Must be at least 8 characters long and no special characters except numbers!');
+            }
+          // Password is invalid 
+        }
+      }
+
+      // Function to show error message
+      function showErrorU(message) {
+        errorMessageU.textContent = message;
+        console.log(message);
+        if (message) {
+          errorMessageU.style.opacity = '1';
+          setTimeout(() => {
+            errorMessageU.style.opacity = '0';
+          }, 500);
+        } 
+        else 
+        {
+          errorMessageU.style.opacity = '0';
+        }
+      }
+      function showErrorP(message) {
+        errorMessageP.textContent = message;
+        if (message) {
+          errorMessageP.style.opacity = '1';
+          setTimeout(() => {
+            errorMessageP.style.opacity = '0';
+          }, 500);
+        } 
+        else 
+        {
+          errorMessageP.style.opacity = '0';
+        }
+      }
+
+  </script>
+</body>
+</html>
