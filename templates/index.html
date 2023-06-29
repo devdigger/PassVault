@@ -386,83 +386,11 @@
         </div>
       </form>
       </div>
-  </div>
-    <!-- View Record Popup -->
-    <div id="view-record-popup" style="display: none;">
-      <div>
-          <h2>View Record</h2>
-          <form method="POST" action="/view-record/">
-            {% csrf_token %}
-
-            <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
-                
-                <div class="getinput"><label for="id">ID:</label></div>
-                <input type="text" id="id" name="id" required><br>
-            </div>
-
-            <button type="submit" class="viewbtn">View</button>
-            <button type="button" onclick="closeViewRecordPopup()" class="cancelbtn">Cancel</button>
-          </form>
-       </div>
-    </div>
-
-    <!-- Delete Record Popup -->
-
-    <div id="delete-record-popup" style="display: none;">
-        <div>
-            <h2>Delete Record</h2>
-            <form method="POST" action="/delete-record/">
-              {% csrf_token %}
-  
-              <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
-                  
-                  <div class="getinput"><label for="id">ID:</label></div>
-                  <input type="text" id="id" name="id" required><br>
-              </div>
-  
-              <button type="submit" class="deletebtn">Delete</button>
-              <button type="button" onclick="closeDeleteRecordPopup()" class="cancelbtn">Cancel</button>
-            </form>
-          </div>
-
     </div>
     
-    <!-- Edit Record Popup -->
-    <div id="edit-record-popup" style="display: none;">
-      <div>
-        <h2>Edit Record</h2>
-        <form method="POST" action="/edit-record/">
-          {% csrf_token %}
-
-          <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
-              
-            <div class="getinput"><label for="id">ID:</label></div>
-            <input type="text" id="id" name="id" required><br>
-          </div>
-          <div style="display:flex; flex-direction: row; padding-bottom: 10px;">
-              
-              <div class="getinput"><label for="site">Site:</label></div>
-              <input type="text" id="site" name="site" required><br>
-          </div>
-          
-          <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
-              <div class="getinput"><label for="username">Username:</label></div>
-              <input type="text" id="username" name="username" required><br>
-          </div>
-          
-          <div style="display:flex; flex-direction: row;padding-bottom: 10px;">
-              <div class="getinput"><label for="password">Password: </label></div>
-              <input type="password" id="password" name="password" required><br>
-          </div>
-
-          <button type="submit" class="savebtn">Save</button>
-          <button type="button" onclick="closeEditRecordPopup() " class="cancelbtn">Cancel</button>
-        </form>
-      </div>
-  </div>
     
     
-
-  </div>
+    </div>
+    
 </body>
 </html>
