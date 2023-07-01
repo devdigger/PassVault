@@ -195,6 +195,13 @@ def register(request):
         request.session['username'] = request.POST.get('master_username')
         request.session['password'] = request.POST.get('master_password')
         name = request.session['username']
+        with sqlite3.connect('db.sqlite3') as conn:
+            cursor = conn.execute(f"SELECT name from sqlite_master where type='table' and name='{name}'")
+            result = cursor.fetchone()
+            if result:
+                print("USER EXISTS")
+                messages.error(request, 'USER ALREADY EXISTS!')
+                return render(request,'register.html')
         print(request.session['username'],request.session['password'])
         create_table(name)
         pwd_bytes = request.session['password'].encode("utf-8")
