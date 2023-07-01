@@ -55,15 +55,15 @@ The Password Manager web app provides the following features:
 
 ## Screenshots
 <details>
-<summary>Create Master Password Page</summary>
+<summary>Register Page</summary>
 
-![Create Master PassWord Page](screenshots/create-pass.png)
+![Create Master PassWord Page](screenshots/register.png)
 
 </details>
 <details>
 <summary>Login Page</summary>
 
-![Login Page](screenshots/login-page.png)
+![Login Page](screenshots/login.png)
 
 </details>
 <details>
