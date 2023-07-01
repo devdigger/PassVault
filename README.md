@@ -1,4 +1,4 @@
-# Password Manager Web App
+# PassVault - Password Management Web App
 
 This is a Django-based web application for securely storing and managing passwords. It allows users to add, view, edit, and delete password records.
 
