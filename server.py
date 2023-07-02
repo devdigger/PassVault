@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import django,cryptography,bcrypt
 import os
 import sys
 from django.core.management import execute_from_command_line
@@ -10,7 +10,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'password_manager.settings')
 
 def start_django_server():
     # Execute the Django server command with the desired port (e.g., 8000)
-    execute_from_command_line(['manage.py', 'runserver', '8000'])
+    execute_from_command_line(['manage.py', 'runserver', '3000'])
 
 if __name__ == '__main__':
     # Perform any necessary setup before starting the server
