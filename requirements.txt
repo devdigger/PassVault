@@ -1,3 +1,4 @@
 django
 cryptography
 bcrypt
+pysqlite3
