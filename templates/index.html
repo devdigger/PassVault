@@ -232,19 +232,22 @@
       background-color: rgb(102, 65, 132);
     }
     .cell-content{
-      max-height: 80px;
+      max-height: 25px;
       overflow-x: auto;
       width:100%;
       white-space: nowrap;
     }
     .cell-content::-webkit-scrollbar {
+      display:none;
       width: 8px;
       height:4px;
       padding-bottom: 8px;
       padding-right: 8px;
       border-radius: 4px; /* set the width of the scrollbar */
     }
-    
+    .cell-content:hover::-webkit-scrollbar {
+      display:block;
+    }
     .cell-content::-webkit-scrollbar-thumb {
       background-color: #b9b9b9; /* set the background color of the thumb */
     }

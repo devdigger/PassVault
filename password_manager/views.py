@@ -46,8 +46,10 @@ def addrecord(id,site,username,password,request):
     key = request.session['password']
     if len(key) > 32:
         key = key[0:32]
-    elif len(password) < 32:
+        print("Greater")
+    elif len(key) < 32:
         key = key + (32 - len(key))*"0"
+
     token = encrypt(key,password)
     with sqlite3.connect('db.sqlite3') as conn:
         query = f'''INSERT INTO {request.session['username']} VALUES({id},"{site}","{username}","{token.decode('utf-8')}")'''
