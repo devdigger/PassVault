@@ -15,8 +15,11 @@
     
     .container {
       max-width: 80%;
-      margin: 0 auto;
+      margin: 40px auto;
       padding: 20px;
+      box-shadow: 0px 0px 40px 1px rgb(203, 203, 203);
+      background-color: rgb(255, 255, 255);
+      border-radius:4px ;
     }
     
     h1 {
@@ -52,7 +55,6 @@
       outline: none;
     }
     th,td{
-        padding-right: 150px;
         padding-left:10px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -229,10 +231,32 @@
     .hidebtn:hover{
       background-color: rgb(102, 65, 132);
     }
+    .cell-content{
+      max-height: 80px;
+      overflow-x: auto;
+      width:100%;
+      white-space: nowrap;
+    }
+    .cell-content::-webkit-scrollbar {
+      width: 8px;
+      height:4px;
+      padding-bottom: 8px;
+      padding-right: 8px;
+      border-radius: 4px; /* set the width of the scrollbar */
+    }
     
+    .cell-content::-webkit-scrollbar-thumb {
+      background-color: #b9b9b9; /* set the background color of the thumb */
+    }
+    
+    .cell-content::-webkit-scrollbar-track {
+      background-color: #f1f1f1; /* set the background color of the track */
+    }
     @media only screen and (max-width: 600px) {
       .container {
         max-width:100%;
+        margin:40px 10px;
+        padding: 10px 20px;
       }
       .responsive-input {
       font-size: 10px;
@@ -373,20 +397,24 @@
         {% csrf_token %}
       <table class="fixed-table">
           <tr>
-              <th>ID</th>
-              <th>WEBSITE</th>
-              <th>USERNAME</th>
-              <th>PASSWORD</th>
+              <th style="width:10%">ID</th>
+              <th style="width:40%">WEBSITE</th>
+              <th style="width:25%">USERNAME</th>
+              <th style="width:25%">PASSWORD</th>
           </tr>
           {% for rows in db_rows %}
           <tr >
               {% for n in rows %}
-              <td>{{n}}</td>
+              <td >
+                <div class="cell-content">
+                  {{n}}
+                </div>
+              </td>
               {% endfor %}
           </tr>
           {% endfor %}
             <tr class="add-row" id="add-row" style="display:none">
-              <td style="font-style: italic;color: #585858;">default</td>
+              <td style="font-style: italic;color: #585858;">*</td>
               <td><input placeholder="SITE" id="site" name="site" class="responsive-input" required></td>
               <td><input placeholder="USERNAME" id="username" name="username" class="responsive-input" required></td>
               <td><input placeholder="PASSWORD" id="password" class="responsive-input" name="password" required></td>
@@ -418,9 +446,6 @@
       </form>
       </div>
     </div>
-    
-    
-    
     </div>
     
 </body>
