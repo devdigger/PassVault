@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import django,cryptography,bcrypt
 import os
 import sys
+os.system("pip install django cryptography bcrypt")
 from django.core.management import execute_from_command_line
 from django.conf import settings
 
