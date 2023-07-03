@@ -7,14 +7,21 @@ from django.conf import settings
 # Set the Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'password_manager.settings')
 
+def make_migrations():
+    # Execute the Django's makemigrations command
+    execute_from_command_line(['manage.py', 'makemigrations'])
+
 def start_django_server():
     # Execute the Django server command with the desired port (e.g., 8000)
     execute_from_command_line(['manage.py', 'runserver', '3000'])
 
 if __name__ == '__main__':
-    # Perform any necessary setup before starting the server
-    
+    # Perform any necessary setup before making migrations
     # For example, you can add custom logic here
-    
+
+    # Make the migrations
+    make_migrations()
+
     # Start the Django server
     start_django_server()
+
