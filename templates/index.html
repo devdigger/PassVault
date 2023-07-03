@@ -255,6 +255,47 @@
     .cell-content::-webkit-scrollbar-track {
       background-color: #f1f1f1; /* set the background color of the track */
     }
+    .fixed-table-container {
+          overflow-x: auto;
+          scrollbar-width: thin;
+          scrollbar-color: #888888 #f1f1f1;
+      }
+
+      .fixed-table-container::-webkit-scrollbar {
+          width: 6px;
+          height:6px;
+      }
+      .fixed-table-container::-webkit-scrollbar-thumb {
+          background-color: #888888;
+      }
+
+      .fixed-table-container::-webkit-scrollbar-thumb:hover {
+          background-color: #555555;
+      }
+
+      .fixed-table-container::-webkit-scrollbar-track {
+          background-color: #f1f1f1;
+      }
+      
+  .fixed-table th{
+      position: relative;
+      cursor: pointer;
+    }
+    .fixed-table th::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -5px;
+        bottom: 0;
+        width: 10px;
+        cursor: col-resize;
+        background-color: transparent;
+    }
+    .fixed-table th:hover::after {
+      background-color: transparent;
+      width:10px;
+      right:-5px;
+      }
     @media only screen and (max-width: 600px) {
       .container {
         max-width:100%;
@@ -278,10 +319,11 @@
       .fixed-table th,.fixed-table td{
         font-size:13px;
       }
-      h1 {
-      font-size: 30px;
-      color: #333;
-      }
+
+        h1 {
+        font-size: 30px;
+        color: #333;
+        }
     }
   </style>
   <script>
@@ -395,10 +437,10 @@
         <button onclick="hideAll()" class="hidebtn" id="hidebtn">Hide All</button>
         <button onclick="showViewRecordPopup()" class="viewbtn" id="viewbtn">View Record</button>
     </div>
-    <div style="overflow-x: auto;">
+    <div class="fixed-table-container" style="overflow-x: auto;">
       <form method="POST" action="/save-record/">
         {% csrf_token %}
-      <table class="fixed-table">
+      <table class="fixed-table" id="fixed-table">
           <tr>
               <th style="width:10%">ID</th>
               <th style="width:40%">WEBSITE</th>
@@ -450,6 +492,37 @@
       </div>
     </div>
     </div>
-    
+    <script>
+          document.addEventListener("DOMContentLoaded", function() {
+          var table = document.getElementById("fixed-table");
+          var headers = table.getElementsByTagName("th");
+          var column;
+          var startX;
+          var startWidth;
+
+          for (var i = 0; i < headers.length; i++) {
+              headers[i].addEventListener("mousedown", initResize, false);
+          }
+
+          function initResize(e) {
+              column = e.target;
+              startX = e.pageX;
+              startWidth = parseInt(document.defaultView.getComputedStyle(column).width, 10);
+              document.documentElement.addEventListener("mousemove", doResize, false);
+              document.documentElement.addEventListener("mouseup", stopResize, false);
+          }
+
+          function doResize(e) {
+              var width = startWidth + e.pageX - startX;
+              column.style.width = width + "px";
+          }
+
+          function stopResize() {
+              document.documentElement.removeEventListener("mousemove", doResize, false);
+              document.documentElement.removeEventListener("mouseup", stopResize, false);
+          }
+      });
+
+    </script>
 </body>
 </html>
