@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +11,20 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f1f1f1;
+      background-image: url("{% static 'background.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height:100vh;
     }
-    
     .container {
       max-width: 80%;
       margin: 40px auto;
       padding: 20px;
-      box-shadow: 0px 0px 40px 1px rgb(203, 203, 203);
-      background-color: rgb(255, 255, 255);
+      box-shadow: 0px 0px 40px 1px rgb(186, 186, 186);
+      background-color: rgb(255, 255, 255,0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1;
       border-radius:4px ;
     }
     
@@ -61,7 +67,9 @@
         text-align: left;
     }
     .top-nav {
-      background-color: #333;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1;
       height:50px;
       padding: 0px;
       display: flex;
@@ -296,6 +304,7 @@
       width:10px;
       right:-5px;
       }
+    
     @media only screen and (max-width: 600px) {
       .container {
         max-width:100%;
@@ -324,6 +333,11 @@
         font-size: 30px;
         color: #333;
         }
+        body {
+          background-size: auto 100vh;
+        background-position: center;
+        height: 100vh;
+      }
     }
   </style>
   <script>
@@ -389,6 +403,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+  
   <div class="top-nav">
     
       <div class="left">

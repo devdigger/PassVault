@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,12 @@
       margin: 0;
       padding: 0;
       font-family: Verdana, sans-serif;
-      background-color: #ebebeb;
+      background-image: url("{% static 'register.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      backdrop-filter: blur(40px);
+      height:100vh;
     }
     h1{
       font-weight: 500;
@@ -24,7 +30,7 @@
       text-align: left;
     }
     .content{
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255,0.9);
         display: flex;
         justify-content: left;
         align-items: left;

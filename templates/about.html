@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,11 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f1f1f1;
+      background-image: url("{% static 'background.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height:100vh;
     }
     .container {
       display: flex;
@@ -20,7 +25,9 @@
     }
     .box{
       box-shadow: 0px 0px 30px 1px rgb(210, 210, 210);
-      background-color: #fcfcfc;
+      background-color: rgb(255, 255, 255,0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1;
       padding: 20px 20px;
       border-radius: 4px;
     }
@@ -33,7 +40,9 @@
         font-size: 20px;
     }
     .top-nav {
-      background-color: #333;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1;
       height:50px;
       padding: 0px;
       display: flex;
@@ -106,6 +115,11 @@
       p,li{
           font-size: 14px;
       }
+      body {
+          background-size: auto 100vh;
+        background-position: center;
+        height: 100vh;
+      }
     }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -133,10 +147,10 @@
       </a>
     </div>
     </div>
-      <h1>PASSWORD MANAGER</h1>
+      <h1>PASSVAULT</h1>
       <div class="container">
         <div class="box">
-          <p>Welcome to Password Manager, the ultimate solution for securely storing and managing your passwords.</p>
+          <p>Welcome to PassVault, the ultimate solution for securely storing and managing your passwords.</p>
           <p>With Password Manager, you can:</p>
           <ul>
             <li>Store all your passwords in one secure location</li>
