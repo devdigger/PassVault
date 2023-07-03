@@ -4,6 +4,9 @@ import sys
 from django.core.management import execute_from_command_line
 from django.conf import settings
 
+from sqlite3 import dbapi2 as Database
+print(Database.sqlite_version_info)
+
 # Set the Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'password_manager.settings')
 
